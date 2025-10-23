@@ -1,0 +1,628 @@
+/*
+  Portfolio Modern CSS
+  - Pure CSS only (no JS changes)
+  - Responsive with Flexbox/Grid
+  - Clean typography, spacing, and animations
+  - Uses Google Fonts via @import
+*/
+
+/* 1) Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* 2) CSS Variables */
+:root {
+  --bg: #0b0f17;
+  --bg-soft: #101626;
+  --surface: #121829;
+  --card: #151c2f;
+  --primary: #6c8cff;
+  --primary-strong: #4e6bff;
+  --secondary: #22d3ee;
+  --text: #e6ebff;
+  --muted: #a9b4d0;
+  --border: #24314f;
+  --accent: #ffd166;
+  --danger: #ff6b6b;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 18px 50px rgba(0, 0, 0, 0.45);
+
+  --container: 1100px;
+}
+/* Optional scroll snap for sections */
+html, body { scroll-snap-type: y proximity; }
+section { scroll-snap-align: start; scroll-margin-top: 72px; }
+/* Subtle heading glow */
+section > h2 { text-shadow: 0 8px 30px rgba(108, 140, 255, 0.12); }
+
+/* 3) Reset and base */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Poppins", "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(1200px 1200px at 80% -10%, rgba(108, 140, 255, 0.12), transparent 45%),
+              radial-gradient(900px 900px at 0% 10%, rgba(34, 211, 238, 0.10), transparent 40%),
+              var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  letter-spacing: 0.2px;
+}
+
+/* Decorative background shapes */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  inset: auto auto 10% -10%;
+  width: 420px; height: 420px;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(60px);
+  opacity: .3;
+  background: radial-gradient(closest-side, rgba(108,140,255,.35), transparent 70%);
+}
+body::after { inset: 5% -8% auto auto; width: 360px; height: 360px; background: radial-gradient(closest-side, rgba(34,211,238,.28), transparent 70%); }
+
+img { max-width: 100%; display: block; }
+img:hover { transform: translateY(-2px); transition: transform .25s ease, box-shadow .25s ease; box-shadow: 0 18px 40px rgba(108,140,255,.18); }
+
+h1, h2, h3 { font-family: "Montserrat", Poppins, system-ui, sans-serif; margin: 0 0 12px; }
+h1 { font-size: clamp(28px, 3.6vw, 48px); line-height: 1.1; }
+h2 { font-size: clamp(22px, 2.4vw, 32px); line-height: 1.2; }
+h3 { font-size: clamp(18px, 2vw, 26px); }
+
+p { margin: 0 0 16px; color: var(--muted); }
+
+ul { margin: 0; padding: 0 0 0 1.2rem; }
+li { margin: 6px 0; }
+
+a { color: var(--secondary); text-decoration: none; transition: color .25s ease, text-shadow .25s ease; }
+a:hover { color: #7be9fb; text-shadow: 0 0 8px rgba(34, 211, 238, .5); }
+
+/* Fancy underline on links */
+a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+}
+a:hover { background-size: 100% 2px; }
+
+hr { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 32px 0; }
+
+/* Selection */
+::selection { background: rgba(108, 140, 255, 0.35); color: #ffffff; }
+::-moz-selection { background: rgba(108, 140, 255, 0.35); color: #ffffff; }
+
+/* Containers and layout */
+.container { max-width: var(--container); margin: 0 auto; padding: 0 20px; }
+section { padding: clamp(48px, 6vw, 88px) 0; }
+
+/* 4) Header / Hero */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(18, 24, 41, 0.9), rgba(18, 24, 41, 0.65));
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: saturate(120%) blur(8px);
+}
+
+header .container { display: grid; grid-template-columns: 1fr; gap: 16px; padding: 20px 20px 32px; }
+
+/* Top bar could hold logo and nav if present */
+nav { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+nav a {
+  color: var(--text);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: transform .18s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease, background-size .25s ease;
+  background-image: linear-gradient(rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  background-size: 0% 100%;
+}
+nav a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(108, 140, 255, 0.5);
+  background: linear-gradient(180deg, rgba(108, 140, 255, 0.12), rgba(255,255,255,0.02));
+  box-shadow: 0 6px 16px rgba(108, 140, 255, 0.15);
+  background-size: 100% 100%;
+}
+/* Hide the literal '|' separators in the markup while keeping links visible */
+nav { color: transparent; }
+nav a { color: var(--text); }
+
+/* Hero text in header */
+header h1 { margin-top: 6px; }
+header p { max-width: 800px; }
+
+/* Gradient hero title with waving hand */
+header h1 {
+  background: linear-gradient(90deg, #ffffff, #b9c6ff, #7aa2ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 14px 40px rgba(108, 140, 255, 0.18);
+}
+header h1::after {
+  content: "  👋";
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: waveHand 2.4s ease-in-out infinite;
+}
+
+/* Accent underline for headings */
+.section-title, header h1, section > h2, h2 + p strong {
+  position: relative;
+  display: inline-block;
+}
+.section-title::after, header h1::after, section > h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 56%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), transparent);
+  border-radius: 3px;
+}
+
+/* Section title emojis */
+section:nth-of-type(1) > h2::before { content: "👤  "; }
+section:nth-of-type(2) > h2::before { content: "🛠️  "; }
+/* Third h2 in document is Projects (outside a section) */
+h2:nth-of-type(3)::before { content: "🚀  "; }
+/* Contact section title */
+section[id*="Contact" i] > h2::before, #Contact\ Me > h2::before { content: "✉️  "; }
+
+/* 5) About Section */
+/* About section general styles can be extended here if structure changes */
+section:nth-of-type(1) .about-wrap { display: grid; grid-template-columns: 140px 1fr; gap: 22px; align-items: start; }
+
+/* Auto-wrap if markup is simple: image + text */
+section:nth-of-type(1) img {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  background: linear-gradient(135deg, rgba(108,140,255,.35), rgba(34,211,238,.25)) border-box;
+  padding: 6px;
+  box-sizing: content-box;
+}
+/* About paragraph as a card */
+section:nth-of-type(1) p {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .22s ease, box-shadow .25s ease, border-color .25s ease;
+}
+section:nth-of-type(1) p:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(108, 140, 255, 0.35); }
+
+/* 6) Skills Section */
+section:nth-of-type(2) ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+section:nth-of-type(2) li {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px 14px 104px;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+}
+section:nth-of-type(2) li:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(108, 140, 255, 0.45); background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03)); }
+
+/* SVG logo badges for skill items */
+section:nth-of-type(2) li { position: relative; }
+section:nth-of-type(2) li::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 78px; /* space for 3 mini logos */
+  height: 24px;
+  border-radius: 8px;
+  display: inline-block;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: 24px 24px, 24px 24px, 24px 24px;
+  background-position: left center, center center, right center;
+}
+/* Row 1: HTML / CSS / JS */
+section:nth-of-type(2) li:nth-child(1)::before {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect rx='6' ry='6' width='24' height='24' fill='%23e34f26'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='Montserrat,Arial' font-size='8' font-weight='700'%3EHTML%3C/text%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect rx='6' ry='6' width='24' height='24' fill='%231572B6'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='Montserrat,Arial' font-size='9' font-weight='700'%3ECSS%3C/text%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect rx='6' ry='6' width='24' height='24' fill='%23f7df1e'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' fill='%23000000' font-family='Montserrat,Arial' font-size='10' font-weight='800'%3EJS%3C/text%3E%3C/svg%3E");
+}
+/* Row 2: Node / Express */
+section:nth-of-type(2) li:nth-child(2)::before {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect rx='6' ry='6' width='24' height='24' fill='%2383CD29'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' fill='%230a1b0a' font-family='Montserrat,Arial' font-size='8' font-weight='800'%3ENode%3C/text%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect rx='6' ry='6' width='24' height='24' fill='%231c243b'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' fill='%23e6ebff' font-family='Montserrat,Arial' font-size='8' font-weight='700'%3EExp%3C/text%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect rx='6' ry='6' width='24' height='24' fill='%231c243b'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' fill='%23e6ebff' font-family='Montserrat,Arial' font-size='9' font-weight='700'%3EAPI%3C/text%3E%3C/svg%3E");
+}
+/* Row 3: Bootstrap / Terminal / Git */
+section:nth-of-type(2) li:nth-child(3)::before {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect rx='6' ry='6' width='24' height='24' fill='%237952B3'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='Montserrat,Arial' font-size='11' font-weight='800'%3EB%3C/text%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect rx='6' ry='6' width='24' height='24' fill='%231a1f2e'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' fill='%23d8e1ff' font-family='Montserrat,Arial' font-size='10' font-weight='700'%3E%26gt%3B_%3C/text%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect rx='6' ry='6' width='24' height='24' fill='%23f05033'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='Montserrat,Arial' font-size='9' font-weight='800'%3EGit%3C/text%3E%3C/svg%3E");
+}
+
+/* 7) Projects block (not wrapped by section in HTML) */
+h2 + p {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+  max-width: var(--container);
+  transition: transform .22s ease, box-shadow .25s ease, border-color .25s ease;
+}
+h2 + p:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(108, 140, 255, 0.35); }
+h2 + p + a[target="_blank"], h2 + p + a[href*="github" i] {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(180deg, rgba(108, 140, 255, 0.14), rgba(108, 140, 255, 0.06));
+  color: white;
+  border: 1px solid rgba(108, 140, 255, 0.5);
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: transform .18s ease, box-shadow .25s ease, background .25s ease;
+  position: relative;
+  overflow: hidden;
+}
+h2 + p + a:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+/* Add rocket icon to project link */
+h2 + p + a::before { content: "🚀"; transition: transform .25s ease; }
+h2 + p + a:hover::before { transform: translateX(3px); }
+
+/* 8) Forms / Contact Section */
+#Contact\ Me, section[id*="Contact" i] {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-top: 1px solid var(--border);
+}
+form { display: block; }
+/* Spacing between your multiple forms in Contact */
+form + form { margin-top: 12px; }
+label { display: inline-block; margin-bottom: 8px; color: var(--text); font-weight: 500; }
+/* Contact label icons */
+label[for="Name"]::before { content: "👤  "; }
+label[for="Email"]::before { content: "📧  "; }
+label[for="Message"]::before { content: "💬  "; }
+/* Lay out contact controls nicely even across multiple small forms */
+section[id*="Contact" i] form { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+input, textarea, button {
+  font-family: inherit;
+  color: var(--text);
+}
+input, textarea {
+  width: min(680px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+/* Visual feedback for invalid inputs */
+input:invalid, textarea:invalid { border-color: rgba(255, 107, 107, 0.6); box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.12); }
+input::placeholder, textarea::placeholder { color: #93a0bf; }
+input:focus, textarea:focus {
+  border-color: rgba(108, 140, 255, 0.6);
+  box-shadow: 0 0 0 4px rgba(108, 140, 255, 0.12);
+  background: #0f1525;
+}
+
+/* Contact section as a modern card layout */
+section[id*="Contact" i] {
+  position: relative;
+  padding-top: max(40px, 6vw);
+  padding-bottom: max(40px, 6vw);
+}
+section[id*="Contact" i] > h2 { grid-column: 1 / -1; margin-bottom: 10px; }
+section[id*="Contact" i] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px 24px;
+}
+/* Subtle vertical divider on wide screens */
+section[id*="Contact" i]::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-0.5px);
+  background: linear-gradient(180deg, transparent, var(--border), transparent);
+  opacity: .6;
+  display: none;
+}
+@media (min-width: 900px) {
+  section[id*="Contact" i]::before { display: block; }
+}
+/* Each individual form looks like a small card */
+section[id*="Contact" i] form {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+}
+section[id*="Contact" i] form:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(108,140,255,.35); }
+section[id*="Contact" i] form:focus-within { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(108,140,255,.22); border-color: rgba(108,140,255,.55); }
+
+/* Field icons inside inputs */
+input#Name {
+  padding-left: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a9b4d0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: 12px center;
+}
+input#Email {
+  padding-left: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a9b4d0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16v16H4z'/%3E%3Cpath d='m22 6-10 7L2 6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: 12px center;
+}
+textarea#Message {
+  padding-left: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a9b4d0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: 12px 14px;
+  min-height: 120px;
+  resize: vertical;
+}
+/* Typing glow on message focus */
+@keyframes typingGlow {
+  0% { box-shadow: 0 0 0 0 rgba(255,209,102,0.08); }
+  50% { box-shadow: 0 0 0 6px rgba(255,209,102,0.12); }
+  100% { box-shadow: 0 0 0 0 rgba(255,209,102,0.08); }
+}
+textarea#Message:focus {
+  animation: typingGlow 1.2s ease-in-out infinite;
+  caret-color: var(--accent);
+}
+
+/* Valid state feedback */
+input:valid, textarea:valid { border-color: rgba(34,211,238,.55); box-shadow: 0 0 0 3px rgba(34,211,238,.15); }
+
+/* Submit button in Contact section */
+section[id*="Contact" i] > button[type="submit"] {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 14px 22px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: transform .15s ease, box-shadow .25s ease, filter .2s ease, background-position .25s ease;
+  background-size: 150% 100%;
+  background-position: 0% 50%;
+}
+section[id*="Contact" i] > button[type="submit"]:hover { background-position: 100% 50%; }
+section[id*="Contact" i] > button[type="submit"]::before {
+  content: "➤";
+  font-weight: 700;
+  margin-right: 8px;
+  transition: transform .25s ease;
+}
+section[id*="Contact" i] > button[type="submit"]:hover::before { transform: translateX(3px); }
+
+/* CSS-only success microinteraction on click */
+@keyframes successBurst {
+  from { transform: scale(0.6); opacity: 0.6; }
+  to { transform: scale(1.4); opacity: 0; }
+}
+@keyframes successPulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,209,102,.35); }
+  100% { box-shadow: 0 0 0 12px rgba(255,209,102,0); }
+}
+section[id*="Contact" i] > button[type="submit"]:active::before { content: "✔"; transform: translateX(0); }
+section[id*="Contact" i] > button[type="submit"]:active {
+  animation: successPulse .6s ease-out 1;
+}
+section[id*="Contact" i] > button[type="submit"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 20px; height: 20px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255,209,102,.6), transparent 60%);
+  opacity: 0; transform: scale(0.6);
+  pointer-events: none;
+}
+section[id*="Contact" i] > button[type="submit"]:active::after { opacity: 1; animation: successBurst .5s ease-out 1; }
+
+button[type="submit"], button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-strong));
+  color: white;
+  border: 0;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 20px rgba(108, 140, 255, 0.35);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  position: relative;
+  overflow: hidden;
+}
+button:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(108, 140, 255, 0.45); }
+button:active { transform: translateY(0); filter: brightness(.96); }
+/* Ripple-like hover highlight */
+button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(200px 80px at var(--x,50%) var(--y,50%), rgba(255,255,255,0.18), transparent 40%);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+button:hover::after { opacity: 1; }
+
+/* Accessible focus outlines */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(108, 140, 255, 0.25);
+  border-color: rgba(108, 140, 255, 0.75);
+}
+
+/* 9) Footer */
+footer {
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+  background: rgba(18, 24, 41, 0.6);
+  backdrop-filter: saturate(110%) blur(6px);
+}
+footer p { text-align: center; padding: 24px 16px; color: var(--muted); }
+
+/* 10) Utility spacing for existing markup structure */
+header > h1, header > p, header > nav, section > h2, section > p, section > img, h2 + p, h2 + p + a {
+  margin-left: max(env(safe-area-inset-left, 0px), 16px);
+  margin-right: max(env(safe-area-inset-right, 0px), 16px);
+}
+
+/* Place header content inside a visual container width */
+header > *:not(hr) {
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Sections get container width too */
+section > *:not(img) {
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Alternate section backgrounds for subtle separation */
+section:nth-of-type(even) {
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008));
+}
+
+/* About image and paragraph visual alignment */
+section:nth-of-type(1) img { margin-top: 10px; }
+section:nth-of-type(1) p { max-width: 800px; }
+
+/* 11) Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatGlow {
+  0% { text-shadow: 0 0 0 rgba(108, 140, 255, 0.0); }
+  60% { text-shadow: 0 0 10px rgba(108, 140, 255, 0.5); }
+  100% { text-shadow: 0 0 0 rgba(108, 140, 255, 0.0); }
+}
+@keyframes waveHand {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(18deg); }
+  20% { transform: rotate(-6deg); }
+  30% { transform: rotate(12deg); }
+  40% { transform: rotate(-2deg); }
+  50% { transform: rotate(4deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Apply reveal to titles and cards */
+header h1, header p, section > h2, section:nth-of-type(2) li, h2 + p, h2 + p + a { animation: fadeIn .7s ease both; }
+header h1 { animation-delay: .05s; }
+header p { animation-delay: .15s; }
+section > h2 { animation-delay: .1s; }
+section:nth-of-type(2) li:nth-child(1) { animation-delay: .05s; }
+section:nth-of-type(2) li:nth-child(2) { animation-delay: .15s; }
+section:nth-of-type(2) li:nth-child(3) { animation-delay: .25s; }
+
+/* Subtle periodic glow on interactive links */
+nav a:hover, h2 + p + a:hover { animation: floatGlow 1.6s ease-in-out 1; }
+
+/* 12) Typography enhancements */
+header p, section p, li { font-size: clamp(14px, 1.2vw, 17px); }
+section > h2 { letter-spacing: 0.4px; }
+
+/* 13) Responsive */
+@media (max-width: 1024px) {
+  .container { padding: 0 18px; }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  nav { gap: 10px; }
+  section:nth-of-type(1) .about-wrap { grid-template-columns: 120px 1fr; }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  nav { flex-direction: column; align-items: stretch; }
+  nav a { width: 100%; text-align: center; }
+
+  section { padding: 36px 0; }
+
+  /* Stack About content visually even if markup is simple */
+  section:nth-of-type(1) img { margin-left: auto; margin-right: auto; }
+
+  /* Make submit button full-width for easier tapping */
+  button[type="submit"] { width: 100%; }
+}
+
+/* Custom scrollbar (WebKit) */
+*::-webkit-scrollbar { height: 10px; width: 10px; }
+*::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+*::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary), var(--primary-strong)); border-radius: 10px; }
+*::-webkit-scrollbar-thumb:hover { filter: brightness(1.05); }
+
+/* Light mode variables (optional) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f7ff;
+    --bg-soft: #ecf0ff;
+    --surface: #ffffff;
+    --card: #ffffff;
+    --primary: #3b5bff;
+    --primary-strong: #2f49d9;
+    --secondary: #0ea5b9;
+    --text: #0f172a;
+    --muted: #475569;
+    --border: #d5dcff;
+  }
+}
+
+/* Print-friendly cleanup */
+@media print {
+  * { box-shadow: none !important; text-shadow: none !important; }
+  body { background: #ffffff !important; color: #000 !important; }
+  header, footer, nav { position: static !important; backdrop-filter: none !important; }
+  a { color: #000 !important; text-decoration: underline !important; background: none !important; }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
